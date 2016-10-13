@@ -11,7 +11,7 @@ Public Class MainForm
 
     ' Opens a file browser.
     ' The selected becomes the target file.
-    Private Sub targetButton_Click(sender As Object, e As EventArgs) Handles targetButton.Click
+    Private Sub TargetButton_Click(sender As Object, e As EventArgs) Handles targetButton.Click
         openFileDialog.Title = "Target Selection"
         openFileDialog.InitialDirectory = parentDirectory
         openFileDialog.ShowDialog()
@@ -21,7 +21,7 @@ Public Class MainForm
     End Sub
 
     ' Manages the wanted algorithm.
-    Private Sub algorithmComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles algorithmComboBox.SelectedIndexChanged
+    Private Sub AlgorithmComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles algorithmComboBox.SelectedIndexChanged
         algorithmName = algorithmComboBox.SelectedItem()
         Select Case algorithmName.ToLower
             Case "sha512"
@@ -38,7 +38,7 @@ Public Class MainForm
     End Sub
 
     ' Manages whether a salt will be used or not.
-    Private Sub useSaltCheckBox_CheckedChanged(sender As Object, e As EventArgs) Handles useSaltCheckBox.CheckedChanged
+    Private Sub UseSaltCheckBox_CheckedChanged(sender As Object, e As EventArgs) Handles useSaltCheckBox.CheckedChanged
         If useSaltCheckBox.Checked Then
             saltSizeTextBox.Enabled = True
         Else
@@ -49,10 +49,11 @@ Public Class MainForm
 
     ' Makes sure everything is prepared for hashing.
     ' Hashes target and stores results in the selected storage path.
-    Private Sub hashButton_Click(sender As Object, e As EventArgs) Handles hashButton.Click
+    Private Sub HashButton_Click(sender As Object, e As EventArgs) Handles hashButton.Click
         ' For elegant purposes
         saveFileDialog.FileName = String.Empty
 
+        ' Validity Checks
         If Not File.Exists(targetPath) Then
             MessageBox.Show("Target Path Does Not Exist.")
             Exit Sub
@@ -70,10 +71,11 @@ Public Class MainForm
             Exit Sub
         End If
 
+        ' Hashing Process
         Dim reader As New StreamReader(targetPath)
         Dim writer As New StreamWriter(saveFileDialog.FileName)
 
-        ' Hashes everyline of given file and writes the properties to a new specified file.
+        ' Hashes everyline of given file and writes the formatted properties to a specified file.
         Dim hasher As New Hasher(algorithmType, useSalt)
         Do
             Dim line = reader.ReadLine()
