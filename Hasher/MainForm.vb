@@ -75,7 +75,7 @@ Public Class MainForm
 
         ' Hashes everyline of given file and writes the properties to a new specified file.
         Dim hasher As New Hasher(algorithmType, useSalt)
-        Do While reader.Peek() <> -1
+        Do
             Dim line = reader.ReadLine()
             Dim hash = hasher.Hash(line, saltSizeTextBox.Text - 1)
             With hash
@@ -85,7 +85,7 @@ Public Class MainForm
                                     algorithmName,
                                     Environment.NewLine))
             End With
-        Loop
+        Loop Until reader.Peek() = -1
         reader.Close()
         writer.Close()
         MessageBox.Show("Done.")
