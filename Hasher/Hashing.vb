@@ -6,7 +6,6 @@ Public Module Hashing
     Public Class Hasher
         Private _algorithm As HashAlgorithm
         Private _useSalt As Boolean = True
-        Private _salt As String = String.Empty
         Private _random As New Random()
 
         Public Sub New(ByVal algorithm As HashAlgorithm)
@@ -20,12 +19,10 @@ Public Module Hashing
 
         ' Hashes given password with wanted algorithm and salt if wanted.
         ' Default salt size is 20 characters.
-        Public Function Hash(ByVal password As String, Optional saltSize As Integer = 19) As Hash
-            Dim salt As String
-            If Not _useSalt Then
-                salt = String.Empty
-            Else
-                salt = GenerateSalt(saltSize)
+        Public Function Hash(ByVal password As String, Optional saltSize As Integer = 20) As Hash
+            Dim salt As String = String.Empty
+            If _useSalt Then
+                salt = GenerateSalt(saltSize - 1)
             End If
 
             Dim bytes As Byte() = Encoding.UTF8.GetBytes(password & salt)
@@ -62,16 +59,6 @@ Public Module Hashing
             End Get
             Set(value As Boolean)
                 _useSalt = value
-            End Set
-        End Property
-
-        ' The salt that will be applied along with the password to form the hash.
-        Public Property Salt As String
-            Get
-                Return _salt
-            End Get
-            Set(value As String)
-                _salt = value
             End Set
         End Property
     End Class
