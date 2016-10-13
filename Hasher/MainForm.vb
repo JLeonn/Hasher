@@ -12,12 +12,15 @@ Public Class MainForm
     ' Opens a file browser.
     ' The selected becomes the target file.
     Private Sub TargetButton_Click(sender As Object, e As EventArgs) Handles targetButton.Click
-        openFileDialog.Title = "Target Selection"
         openFileDialog.InitialDirectory = parentDirectory
         openFileDialog.ShowDialog()
 
-        targetLabel.Text = openFileDialog.FileName
-        targetPath = openFileDialog.FileName
+        If File.Exists(openFileDialog.FileName) Then
+            targetLabel.Text = openFileDialog.FileName
+            targetPath = openFileDialog.FileName
+        Else
+            targetLabel.Text = "No Target Selected."
+        End If
     End Sub
 
     ' Manages the wanted algorithm.

@@ -40,7 +40,7 @@ Partial Class MainForm
         '
         'openFileDialog
         '
-        Me.openFileDialog.FileName = "OpenFileDialog"
+        Me.openFileDialog.Title = "Target Selection"
         '
         'Label10
         '
