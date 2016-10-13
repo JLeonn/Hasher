@@ -23,7 +23,18 @@ Public Class MainForm
     ' Manages the wanted algorithm.
     Private Sub algorithmComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles algorithmComboBox.SelectedIndexChanged
         algorithmName = algorithmComboBox.SelectedItem()
-        algorithmType = getAlgorithmType(algorithmName)
+        Select Case algorithmName.ToLower
+            Case "sha512"
+                algorithmType = New SHA512Managed()
+            Case "sha384"
+                algorithmType = New SHA384Managed()
+            Case "sha256"
+                algorithmType = New SHA256Managed()
+            Case "sha1"
+                algorithmType = New SHA1Managed()
+            Case Else
+                Throw New ArgumentOutOfRangeException()
+        End Select
     End Sub
 
     ' Manages whether a salt will be used or not.
@@ -79,21 +90,4 @@ Public Class MainForm
         writer.Close()
         MessageBox.Show("Done.")
     End Sub
-
-    ' Non Handlers
-    ' Returns the data type depening on the string given.
-    Private Function getAlgorithmType(ByVal algorithm As String) As HashAlgorithm
-        Select Case algorithm.ToLower
-            Case "sha512"
-                Return New SHA512Managed()
-            Case "sha384"
-                Return New SHA384Managed()
-            Case "sha256"
-                Return New SHA256Managed()
-            Case "sha1"
-                Return New SHA1Managed()
-            Case Else
-                Throw New ArgumentOutOfRangeException()
-        End Select
-    End Function
 End Class
