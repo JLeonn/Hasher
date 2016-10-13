@@ -47,6 +47,10 @@ Public Class MainForm
             Exit Sub
         End If
 
+        If algorithmComboBox.SelectedItem = String.Empty Then
+            MessageBox.Show("No Hashing Algorithm Selected.")
+            Exit Sub
+        End If
         saveFileDialog.Filter = "Hash Formatted File (.hff)|*.hff"
         saveFileDialog.ShowDialog()
 
