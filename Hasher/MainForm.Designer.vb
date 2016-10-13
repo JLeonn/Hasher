@@ -22,11 +22,7 @@ Partial Class MainForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
-        Me.Label11 = New System.Windows.Forms.Label()
-        Me.storageLabel = New System.Windows.Forms.Label()
-        Me.storageButton = New System.Windows.Forms.Button()
-        Me.Label13 = New System.Windows.Forms.Label()
+        Me.openFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.targetLabel = New System.Windows.Forms.Label()
         Me.targetButton = New System.Windows.Forms.Button()
@@ -38,56 +34,13 @@ Partial Class MainForm
         Me.Label1 = New System.Windows.Forms.Label()
         Me.algorithmComboBox = New System.Windows.Forms.ComboBox()
         Me.hashButton = New System.Windows.Forms.Button()
+        Me.saveFileDialog = New System.Windows.Forms.SaveFileDialog()
         Me.groupBox.SuspendLayout()
         Me.SuspendLayout()
         '
-        'OpenFileDialog
+        'openFileDialog
         '
-        Me.OpenFileDialog.FileName = "OpenFileDialog"
-        '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(595, 44)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Padding = New System.Windows.Forms.Padding(5)
-        Me.Label11.Size = New System.Drawing.Size(97, 26)
-        Me.Label11.TabIndex = 37
-        Me.Label11.Text = "Storage File: "
-        '
-        'storageLabel
-        '
-        Me.storageLabel.AutoSize = True
-        Me.storageLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
-        Me.storageLabel.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.storageLabel.Location = New System.Drawing.Point(698, 45)
-        Me.storageLabel.Name = "storageLabel"
-        Me.storageLabel.Padding = New System.Windows.Forms.Padding(5)
-        Me.storageLabel.Size = New System.Drawing.Size(115, 25)
-        Me.storageLabel.TabIndex = 36
-        Me.storageLabel.Text = "No Target Selected."
-        '
-        'storageButton
-        '
-        Me.storageButton.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.storageButton.Location = New System.Drawing.Point(739, 12)
-        Me.storageButton.Name = "storageButton"
-        Me.storageButton.Size = New System.Drawing.Size(75, 23)
-        Me.storageButton.TabIndex = 35
-        Me.storageButton.Text = "Browse"
-        Me.storageButton.UseVisualStyleBackColor = True
-        '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(595, 9)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Padding = New System.Windows.Forms.Padding(5)
-        Me.Label13.Size = New System.Drawing.Size(138, 26)
-        Me.Label13.TabIndex = 34
-        Me.Label13.Text = "Select Storage File: "
+        Me.openFileDialog.FileName = "OpenFileDialog"
         '
         'Label10
         '
@@ -218,13 +171,9 @@ Partial Class MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(874, 482)
+        Me.ClientSize = New System.Drawing.Size(1023, 590)
         Me.Controls.Add(Me.hashButton)
         Me.Controls.Add(Me.groupBox)
-        Me.Controls.Add(Me.Label11)
-        Me.Controls.Add(Me.storageLabel)
-        Me.Controls.Add(Me.storageButton)
-        Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.targetLabel)
         Me.Controls.Add(Me.targetButton)
@@ -238,11 +187,7 @@ Partial Class MainForm
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents OpenFileDialog As OpenFileDialog
-    Friend WithEvents Label11 As Label
-    Friend WithEvents storageLabel As Label
-    Friend WithEvents storageButton As Button
-    Friend WithEvents Label13 As Label
+    Friend WithEvents openFileDialog As OpenFileDialog
     Friend WithEvents Label10 As Label
     Friend WithEvents targetLabel As Label
     Friend WithEvents targetButton As Button
@@ -254,4 +199,5 @@ Partial Class MainForm
     Friend WithEvents hashButton As Button
     Friend WithEvents saltSizeTextBox As TextBox
     Friend WithEvents Label3 As Label
+    Friend WithEvents saveFileDialog As SaveFileDialog
 End Class

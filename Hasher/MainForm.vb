@@ -3,10 +3,8 @@ Imports System.Security.Cryptography
 
 Public Class MainForm
     Private parentDirectory As String = Directory.GetParent(Directory.GetCurrentDirectory()).ToString()
-    Private defaultStoragePath As String = parentDirectory & "\Hashes.txt"
 
     Private targetPath As String
-    Private storagePath As String
     Private algorithmName As String
     Private algorithmType As HashAlgorithm
     Private useSalt As Boolean
@@ -14,24 +12,12 @@ Public Class MainForm
     ' Opens a file browser.
     ' The selected becomes the target file.
     Private Sub targetButton_Click(sender As Object, e As EventArgs) Handles targetButton.Click
-        OpenFileDialog.Title = "Target Selection"
-        OpenFileDialog.InitialDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).ToString()
-        OpenFileDialog.ShowDialog()
+        openFileDialog.Title = "Target Selection"
+        openFileDialog.InitialDirectory = parentDirectory
+        openFileDialog.ShowDialog()
 
-        targetLabel.Text = OpenFileDialog.FileName
-        targetPath = OpenFileDialog.FileName
-    End Sub
-
-    ' Opens file browser.
-    ' The selected file becomes the storage path.
-    ' There is a default storage path.
-    Private Sub storageButton_Click(sender As Object, e As EventArgs) Handles storageButton.Click
-        OpenFileDialog.Title = "Storage Selection"
-        OpenFileDialog.InitialDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).ToString()
-        OpenFileDialog.ShowDialog()
-
-        storageLabel.Text = OpenFileDialog.FileName
-        storagePath = OpenFileDialog.FileName
+        targetLabel.Text = openFileDialog.FileName
+        targetPath = openFileDialog.FileName
     End Sub
 
     ' Manages the wanted algorithm.
@@ -53,12 +39,24 @@ Public Class MainForm
     ' Makes sure everything is prepared for hashing.
     ' Hashes target and stores results in the selected storage path.
     Private Sub hashButton_Click(sender As Object, e As EventArgs) Handles hashButton.Click
-        ' Initialiezes IO and IO streams
-        If Not initializekIO() Then
+        ' For elegant purposes
+        saveFileDialog.FileName = String.Empty
+
+        If Not File.Exists(targetPath) Then
+            MessageBox.Show("Target Path Does Not Exist.")
             Exit Sub
         End If
+
+        saveFileDialog.Filter = "Hash Formatted File (.hff)|*.hff"
+        saveFileDialog.ShowDialog()
+
+        If Path.GetExtension(saveFileDialog.FileName) <> ".hff" Then
+            MessageBox.Show("File Must Be Saved As A '.hff' Format.")
+            Exit Sub
+        End If
+
         Dim reader As New StreamReader(targetPath)
-        Dim writer As New StreamWriter(storagePath)
+        Dim writer As New StreamWriter(saveFileDialog.FileName)
 
         ' Hashes everyline of given file and writes the properties to a new specified file.
         Dim hasher As New Hasher(algorithmType, useSalt)
@@ -93,19 +91,5 @@ Public Class MainForm
             Case Else
                 Throw New ArgumentOutOfRangeException()
         End Select
-    End Function
-
-    ' Checks if the class paths are valid, if so, returns true.
-    Private Function initializekIO() As Boolean
-        If Not File.Exists(targetPath) Then
-            MessageBox.Show("Target Path Does Not Exist.")
-            Return False
-        End If
-
-        If Not File.Exists(storagePath) Then
-            storagePath = defaultStoragePath
-        End If
-
-        Return True
     End Function
 End Class
