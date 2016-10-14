@@ -82,7 +82,7 @@ Public Class MainForm
         Dim hasher As New Hasher(algorithmType, useSalt)
         Do
             Dim line = reader.ReadLine()
-            Dim hash = hasher.Hash(line, saltSizeTextBox.Text - 1)
+            Dim hash = hasher.Hash(line, saltSizeTextBox.Text)
             With hash
                 writer.Write(String.Format("Hash: {0}, Salt: {1}, HashType: {2}{3}",
                                     .Hash,
