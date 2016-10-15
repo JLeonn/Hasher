@@ -13,6 +13,7 @@ Public Class MainForm
     ' The selected becomes the target file.
     Private Sub TargetButton_Click(sender As Object, e As EventArgs) Handles targetButton.Click
         openFileDialog.InitialDirectory = parentDirectory
+        openFileDialog.Filter = "Text File (.txt)|*.txt"
         openFileDialog.ShowDialog()
 
         If File.Exists(openFileDialog.FileName) Then
@@ -53,9 +54,6 @@ Public Class MainForm
     ' Makes sure everything is prepared for hashing.
     ' Hashes target and stores results in the selected storage path.
     Private Sub HashButton_Click(sender As Object, e As EventArgs) Handles hashButton.Click
-        ' For elegant purposes
-        saveFileDialog.FileName = String.Empty
-
         ' Validity Checks
         If Not File.Exists(targetPath) Then
             MessageBox.Show("Target Path Does Not Exist.")
@@ -66,11 +64,11 @@ Public Class MainForm
             MessageBox.Show("No Hashing Algorithm Selected.")
             Exit Sub
         End If
-        saveFileDialog.Filter = "Hash Formatted File (.hff)|*.hff"
+        saveFileDialog.Filter = "Hash File (.hash)|*.hash"
         saveFileDialog.ShowDialog()
 
-        If Path.GetExtension(saveFileDialog.FileName) <> ".hff" Then
-            MessageBox.Show("File Must Be Saved As A '.hff' Format.")
+        If Path.GetExtension(saveFileDialog.FileName) <> ".hash" Then
+            MessageBox.Show("File Must Be Saved As A '.hash' Format.")
             Exit Sub
         End If
 
