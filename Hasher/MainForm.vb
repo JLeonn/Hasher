@@ -9,6 +9,10 @@ Public Class MainForm
     Private algorithmType As HashAlgorithm
     Private useSalt As Boolean
 
+    Private Sub MainForm_Load(ByVal sender As Object, ByVal e As EventArgs) Handles MyBase.Load
+        Icon = My.Resources.HashIcon
+    End Sub
+
     ' Opens a file browser.
     ' The selected becomes the target file.
     Private Sub TargetButton_Click(sender As Object, e As EventArgs) Handles targetButton.Click
