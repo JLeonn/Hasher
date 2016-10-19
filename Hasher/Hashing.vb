@@ -20,9 +20,11 @@ Public Module Hashing
         ' Hashes given password with wanted algorithm and salt if wanted.
         ' Default salt size is 20 characters.
         Public Function Hash(ByVal password As String, Optional saltSize As Integer = 20) As Hash
-            Dim salt As String = String.Empty
+            Dim salt As String
             If _useSalt Then
                 salt = GenerateSalt(saltSize - 1)
+            Else
+                salt = String.Empty
             End If
 
             Dim bytes As Byte() = Encoding.UTF8.GetBytes(password & salt)
