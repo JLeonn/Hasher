@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Security.Cryptography
+Imports Hasher.Hashing
 
 Public Class MainForm
     Private parentDirectory As String = Directory.GetParent(Directory.GetCurrentDirectory()).ToString()
@@ -81,7 +82,7 @@ Public Class MainForm
         Dim writer As New StreamWriter(saveFileDialog.FileName)
 
         ' Hashes everyline of given file and writes the formatted properties to a specified file.
-        Dim hasher As New Hasher(algorithmType, useSalt)
+        Dim hasher As New HashBuilder(algorithmType, useSalt)
         Do
             Dim line = reader.ReadLine()
             Dim hash = hasher.Hash(line, saltSizeTextBox.Text)

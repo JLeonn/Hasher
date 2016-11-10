@@ -1,30 +1,32 @@
 ﻿Imports System.Security.Cryptography
 Imports System.Text
 
-Public Module Hashing
-    ' Contains tools used to hash a string with a given Hashing Algorithm.
-    Public Class Hasher
+Namespace Hashing
+
+    ' Contains tools used to hash a string.
+#Region "HasherBuilder Class"
+    Public Class HashBuilder
         Private _algorithm As HashAlgorithm
+        Private _salt As String = String.Empty
         Private _useSalt As Boolean = True
-        Private _random As New Random()
 
         Public Sub New(ByVal algorithm As HashAlgorithm)
-            Me.Algorithm = algorithm
+            _algorithm = algorithm
         End Sub
 
         Public Sub New(ByVal algorithm As HashAlgorithm, useSalt As Boolean)
-            Me.Algorithm = algorithm
-            Me.UseSalt = useSalt
+            _algorithm = algorithm
+            _useSalt = useSalt
         End Sub
 
         ' Hashes given password with wanted algorithm and salt if wanted.
         ' Default salt size is 20 characters.
-        Public Function Hash(ByVal password As String, Optional saltSize As Integer = 20) As Hash
+        Public Function hash(ByVal password As String, Optional saltSize As Integer = 19) As Hash
             Dim salt As String
-            If _useSalt Then
-                salt = GenerateSalt(saltSize - 1)
-            Else
+            If Not _useSalt Then
                 salt = String.Empty
+            Else
+                salt = generateSalt(saltSize)
             End If
 
             Dim bytes As Byte() = Encoding.UTF8.GetBytes(password & salt)
@@ -33,11 +35,12 @@ Public Module Hashing
         End Function
 
         ' Generates salt with the desired length.
-        Public Function GenerateSalt(ByVal saltSize As Integer) As String
+        Public Function generateSalt(ByVal saltSize As Integer) As String
             Dim salt As New StringBuilder
+            Dim random As New Random()
 
             For i As Integer = 0 To saltSize
-                Dim randomIndex As Integer = _random.Next(0, ALL_CHARACTERS.Length - 1)
+                Dim randomIndex As Integer = random.Next(0, ALL_CHARACTERS.Length - 1)
                 salt.Append(ALL_CHARACTERS.Substring(randomIndex, 1))
             Next
             Return salt.ToString()
@@ -54,6 +57,16 @@ Public Module Hashing
             End Set
         End Property
 
+        ' The salt that will be applied along with the password to form the hash.
+        Public Property Salt As String
+            Get
+                Return _salt
+            End Get
+            Set(value As String)
+                _salt = value
+            End Set
+        End Property
+
         ' Determines if a salt should be used or not.
         Public Property UseSalt As Boolean
             Get
@@ -64,18 +77,19 @@ Public Module Hashing
             End Set
         End Property
     End Class
+#End Region
 
-
-    ' Holds information regarding a hash.
+    ' Holds information regarding a hash. The result of a string being hashed.
+#Region "Hash Class"
     Public Class Hash
         Private _hash As String
         Private _salt As String
         Private _type As HashAlgorithm
 
         Public Sub New(ByVal hash As String, salt As String, type As HashAlgorithm)
-            Me.Hash = hash
-            Me.Salt = salt
-            Me.Type = type
+            _hash = hash
+            _salt = salt
+            _type = type
         End Sub
 
         ' Class Properties
@@ -109,4 +123,5 @@ Public Module Hashing
             End Set
         End Property
     End Class
-End Module
+#End Region
+End Namespace
