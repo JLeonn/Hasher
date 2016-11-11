@@ -7,15 +7,18 @@ Namespace Hashing
 #Region "HasherBuilder Class"
     Public Class HashBuilder
         Private _algorithm As HashAlgorithm
+        Private _random As Random
         Private _salt As String = String.Empty
         Private _useSalt As Boolean = True
 
         Public Sub New(ByVal algorithm As HashAlgorithm)
             _algorithm = algorithm
+            _random = New Random()
         End Sub
 
         Public Sub New(ByVal algorithm As HashAlgorithm, useSalt As Boolean)
             _algorithm = algorithm
+            _random = New Random()
             _useSalt = useSalt
         End Sub
 
@@ -37,10 +40,9 @@ Namespace Hashing
         ' Generates salt with the desired length.
         Public Function generateSalt(ByVal saltSize As Integer) As String
             Dim salt As New StringBuilder
-            Dim random As New Random()
 
             For i As Integer = 0 To saltSize
-                Dim randomIndex As Integer = random.Next(0, ALL_CHARACTERS.Length - 1)
+                Dim randomIndex As Integer = _random.Next(0, ALL_CHARACTERS.Length - 1)
                 salt.Append(ALL_CHARACTERS.Substring(randomIndex, 1))
             Next
             Return salt.ToString()
