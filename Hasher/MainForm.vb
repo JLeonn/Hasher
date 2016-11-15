@@ -56,6 +56,13 @@ Public Class MainForm
         useSalt = useSaltCheckBox.Checked
     End Sub
 
+    Private Sub SaltSizeTextBox_Leave(sender As Object, e As EventArgs) Handles saltSizeTextBox.Leave
+        If Not Integer.TryParse(saltSizeTextBox.Text, Nothing) Then
+            saltSizeTextBox.Text = 20
+            MessageBox.Show("Invalid Salt Size.")
+        End If
+    End Sub
+
     ' Makes sure everything is prepared for hashing.
     ' Hashes target and stores results in the selected storage path.
     Private Sub HashButton_Click(sender As Object, e As EventArgs) Handles hashButton.Click
