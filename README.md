@@ -5,7 +5,7 @@ Hashes each password in a given .txt file and stores each property of the hash i
 The application comes with a simplistic interface in order to guide you through
 the process of hashing your desired passwords.
 
-![alt tag](exmaples/main-window.png)
+![alt tag](examples/main-window.png)
 
 Steps:
 1. Select the target file.
